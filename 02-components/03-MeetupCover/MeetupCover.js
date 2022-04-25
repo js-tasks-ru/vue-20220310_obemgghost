@@ -10,12 +10,12 @@ export default defineComponent({
     },
     image: {
       type: String,
-      default: 'https://course-vue.javascript.ru/api/images/2',
+      default: '',
     },
   },
 
   template: `
-    <div class="meetup-cover" :style=" image && {'--bg-url': \`url(\${image})\` } ">
-      <h1 class="meetup-cover__title">{{ title }}</h1>
+    <div class="meetup-cover" :style="image && \`--bg-url: url('\${image}')\`">
+    <h1 class="meetup-cover__title">{{title}}</h1>
     </div>`,
 });
