@@ -1,15 +1,15 @@
-import { defineComponent } from './vendor/vue.esm-browser.js';
+import { defineComponent } from './vendor/vue.esm-browser';
 import MeetupAgendaItem from './MeetupAgendaItem.js';
 
 export default defineComponent({
   name: 'MeetupAgenda',
 
-  props: {
-    agenda: Array,
-  },
-
   components: {
     MeetupAgendaItem,
+  },
+
+  props: {
+    agenda: Array,
   },
 
   template: `
