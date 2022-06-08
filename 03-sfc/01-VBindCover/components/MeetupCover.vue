@@ -25,11 +25,9 @@ export default {
 
 <style scoped>
 .meetup-cover {
-  --default-cover: v-bind( imageProperty );
-
   background-size: cover;
   background-position: center;
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--default-cover) ;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), v-bind( imageProperty ) ;
   display: flex;
   flex-direction: column;
   align-items: center;
