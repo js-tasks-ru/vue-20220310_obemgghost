@@ -1,5 +1,5 @@
 <template>
-  <div class="toast">
+  <div class="toast" :class="toastClass">
     <ui-icon class="toast__icon" :icon="icon" />
     <span><slot /></span>
   </div>
@@ -9,10 +9,47 @@
 import UiIcon from './UiIcon';
 
 export default {
-  name: "UiToast",
+  name: 'UiToast',
   components: { UiIcon },
-  props: ['type', 'icon']
-}
+  props: {
+    type: {
+      require: true,
+      type: String,
+    },
+    id: {
+      require: true,
+      type: Number,
+    },
+    lifeTime: {
+      default: 5000,
+      type: Number,
+    },
+  },
+  emits: ['deleteToast'],
+
+  computed: {
+    toastClass() {
+      return 'toast_' + this.type;
+    },
+    icon() {
+      const toasts_types = {
+        success: 'check-circle',
+        error: 'alert-circle',
+      };
+      return toasts_types[this.type];
+    },
+  },
+  mounted() {
+    setTimeout(() => {
+      this.deleteToast();
+    }, this.lifeTime);
+  },
+  methods: {
+    deleteToast() {
+      this.$emit('deleteToast', this.id);
+    },
+  },
+};
 </script>
 
 <style scoped>
