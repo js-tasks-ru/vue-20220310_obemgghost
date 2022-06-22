@@ -1,38 +1,47 @@
 <template>
   <div class="toasts">
-    <ui-toast v-for="toast in toasts" :class="toast.type" :icon="toast.icon">{{ toast.message }}</ui-toast>
+    <ui-toast
+      v-for="(toast, index) in toasts"
+      :id="toast.id"
+      :key="index"
+      :type="toast.type"
+      @deleteToast="deleteToast"
+      >{{ toast.message }}</ui-toast
+    >
   </div>
 </template>
 
 <script>
-import UiToast from "./UiToast";
+import UiToast from './UiToast';
 
 export default {
   name: 'TheToaster',
   components: { UiToast },
-  data(){
+  data() {
     return {
+      id: 0,
       toasts: [],
-    }
+    };
   },
   methods: {
-    success( message ) {
+    success(message) {
       this.toasts.push({
-        type: 'toast_success',
+        id: Date.now(),
+        type: 'success',
         message: message,
-        icon: 'check-circle'
       });
-      setTimeout( () => this.toasts.shift(), 5000 );
     },
-    error( message ) {
+    error(message) {
       this.toasts.push({
-        type: 'toast_error',
+        id: Date.now(),
+        type: 'error',
         message: message,
-        icon: 'alert-circle'
       });
-      setTimeout( () => this.toasts.shift(), 5000 );
-    }
-  }
+    },
+    deleteToast(id) {
+      this.toasts = this.toasts.filter((item) => item.id !== id);
+    },
+  },
 };
 </script>
 
