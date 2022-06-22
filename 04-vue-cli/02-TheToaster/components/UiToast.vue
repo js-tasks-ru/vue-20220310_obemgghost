@@ -20,12 +20,7 @@ export default {
       require: true,
       type: Number,
     },
-    lifeTime: {
-      default: 5000,
-      type: Number,
-    },
   },
-  emits: ['deleteToast'],
 
   computed: {
     toastClass() {
@@ -37,16 +32,6 @@ export default {
         error: 'alert-circle',
       };
       return toasts_types[this.type];
-    },
-  },
-  mounted() {
-    setTimeout(() => {
-      this.deleteToast();
-    }, this.lifeTime);
-  },
-  methods: {
-    deleteToast() {
-      this.$emit('deleteToast', this.id);
     },
   },
 };

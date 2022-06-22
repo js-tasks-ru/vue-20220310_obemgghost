@@ -1,13 +1,8 @@
 <template>
   <div class="toasts">
-    <ui-toast
-      v-for="(toast, index) in toasts"
-      :id="toast.id"
-      :key="index"
-      :type="toast.type"
-      @deleteToast="deleteToast"
-      >{{ toast.message }}</ui-toast
-    >
+    <ui-toast v-for="(toast, index) in toasts" :id="toast.id" :key="index" :type="toast.type">{{
+      toast.message
+    }}</ui-toast>
   </div>
 </template>
 
@@ -21,25 +16,32 @@ export default {
     return {
       id: 0,
       toasts: [],
+      timeout: 5000,
     };
   },
   methods: {
     success(message) {
+      let toastId = Date.now();
       this.toasts.push({
-        id: Date.now(),
+        id: toastId,
         type: 'success',
         message: message,
       });
+      this.setDeleteToastTimer(toastId);
     },
     error(message) {
+      const toastId = Date.now();
       this.toasts.push({
-        id: Date.now(),
+        id: toastId,
         type: 'error',
         message: message,
       });
+      this.setDeleteToastTimer(toastId);
     },
-    deleteToast(id) {
-      this.toasts = this.toasts.filter((item) => item.id !== id);
+    setDeleteToastTimer(toastId) {
+      setTimeout(() => {
+        this.toasts = this.toasts.filter((i) => i.id !== toastId);
+      }, this.timeout);
     },
   },
 };

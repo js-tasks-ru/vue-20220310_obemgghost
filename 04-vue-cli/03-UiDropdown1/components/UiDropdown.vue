@@ -5,22 +5,23 @@
       <span>{{ dropdownTitle }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox" v-show="isDropdownOpened">
+    <div v-show="isDropdownOpened" class="dropdown__menu" role="listbox">
       <button
         v-for="option in options"
         :key="option.value"
-        @click="selectValue(option.value)"
         class="dropdown__item"
-        :class="{dropdown__item_icon: hasIcon }"
+        :class="{ dropdown__item_icon: hasIcon }"
         role="option"
-        type="button">
+        type="button"
+        @click="selectValue(option.value)"
+      >
         <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
         {{ option.text }}
       </button>
     </div>
 
-    <select class="dropdown__hidden" name="" id="" v-model="modelValue">
-      <option v-for="option in options" :key="option.value" :value="option.value">{{option.text}}</option>
+    <select id="" v-model="modelValue" class="dropdown__hidden" name="">
+      <option v-for="option in options" :key="option.value" :value="option.value">{{ option.text }}</option>
     </select>
   </div>
 </template>
@@ -30,49 +31,49 @@ import UiIcon from './UiIcon';
 
 export default {
   name: 'UiDropdown',
-  props: ['options', 'modelValue', 'title'],
 
   components: { UiIcon },
+  props: ['options', 'modelValue', 'title'],
   emits: ['update:modelValue'],
 
-  methods: {
-    selectValue( option ){
-      this.$emit('update:modelValue', option );
-      this.isDropdownOpened = false;
-    },
-    toggleDropdown(){
-      this.isDropdownOpened = !this.isDropdownOpened;
-    }
+  data() {
+    return {
+      isDropdownOpened: false,
+    };
   },
 
   computed: {
-    hasIcon(){
-      return this.options.find( (item) => item.icon );
+    hasIcon() {
+      return this.options.find((item) => item.icon);
     },
-    dropdownTitle(){
-      if( this.modelValue ){
-        return this.options.find( ( item ) => item.value === this.modelValue ).text;
-      }else {
+    dropdownTitle() {
+      if (this.modelValue) {
+        return this.options.find((item) => item.value === this.modelValue).text;
+      } else {
         return this.title;
       }
     },
-    currentIcon(){
-      if( this.modelValue ){
-        return this.options.find( ( item ) => item.value === this.modelValue ).icon;
+    currentIcon() {
+      if (this.modelValue) {
+        return this.options.find((item) => item.value === this.modelValue).icon;
       }
-    }
+    },
   },
 
-  data(){
-    return {
-      isDropdownOpened: false,
-    }
-  }
+  methods: {
+    selectValue(option) {
+      this.$emit('update:modelValue', option);
+      this.isDropdownOpened = false;
+    },
+    toggleDropdown() {
+      this.isDropdownOpened = !this.isDropdownOpened;
+    },
+  },
 };
 </script>
 
 <style scoped>
-.dropdown__hidden{
+.dropdown__hidden {
   display: none;
 }
 .dropdown {
