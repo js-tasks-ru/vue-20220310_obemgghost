@@ -1,20 +1,27 @@
 <template>
-  <div class="dropdown dropdown_opened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <ui-icon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+  <div class="dropdown" :class="{ dropdown_opened: isDropdownOpened }">
+    <button type="button" class="dropdown__toggle" :class="{ dropdown__toggle_icon: hasIcon }" @click="toggleDropdown">
+      <ui-icon v-if="currentIcon" :icon="currentIcon" class="dropdown__icon" />
+      <span>{{ dropdownTitle }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 1
-      </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 2
+    <div class="dropdown__menu" role="listbox" v-show="isDropdownOpened">
+      <button
+        v-for="option in options"
+        :key="option.value"
+        @click="selectValue(option.value)"
+        class="dropdown__item"
+        :class="{dropdown__item_icon: hasIcon }"
+        role="option"
+        type="button">
+        <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
+        {{ option.text }}
       </button>
     </div>
+
+    <select class="dropdown__hidden" name="" id="" v-model="modelValue">
+      <option v-for="option in options" :key="option.value" :value="option.value">{{option.text}}</option>
+    </select>
   </div>
 </template>
 
@@ -23,12 +30,51 @@ import UiIcon from './UiIcon';
 
 export default {
   name: 'UiDropdown',
+  props: ['options', 'modelValue', 'title'],
 
   components: { UiIcon },
+  emits: ['update:modelValue'],
+
+  methods: {
+    selectValue( option ){
+      this.$emit('update:modelValue', option );
+      this.isDropdownOpened = false;
+    },
+    toggleDropdown(){
+      this.isDropdownOpened = !this.isDropdownOpened;
+    }
+  },
+
+  computed: {
+    hasIcon(){
+      return this.options.find( (item) => item.icon );
+    },
+    dropdownTitle(){
+      if( this.modelValue ){
+        return this.options.find( ( item ) => item.value === this.modelValue ).text;
+      }else {
+        return this.title;
+      }
+    },
+    currentIcon(){
+      if( this.modelValue ){
+        return this.options.find( ( item ) => item.value === this.modelValue ).icon;
+      }
+    }
+  },
+
+  data(){
+    return {
+      isDropdownOpened: false,
+    }
+  }
 };
 </script>
 
 <style scoped>
+.dropdown__hidden{
+  display: none;
+}
 .dropdown {
   position: relative;
   display: inline-block;
