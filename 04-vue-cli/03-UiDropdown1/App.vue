@@ -15,8 +15,9 @@
     </p>
 
     <h2>Mixed icons</h2>
-    <ui-dropdown v-model="selectedMixed" :options="mixedIconsOptions" title="Mixed icons" />
-    <p></p>
+    <p>
+      <ui-dropdown v-model="selectedMixed" :options="mixedIconsOptions" title="Mixed icons" />
+    </p>
   </div>
 </template>
 

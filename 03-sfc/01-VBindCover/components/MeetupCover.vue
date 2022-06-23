@@ -13,13 +13,13 @@ export default {
     },
     image: {
       type: String,
-    }
+    },
   },
   computed: {
-    imageProperty(){
-      return this.image ? 'url('+ this.image +')' : 'url(\'https://course-vue.javascript.ru/api/images/2\')'
-    }
-  }
+    imageProperty() {
+      return this.image ? 'url(' + this.image + ')' : 'var(--default-cover)';
+    },
+  },
 };
 </script>
 
@@ -27,7 +27,7 @@ export default {
 .meetup-cover {
   background-size: cover;
   background-position: center;
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), v-bind( imageProperty ) ;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), v-bind(imageProperty);
   display: flex;
   flex-direction: column;
   align-items: center;
