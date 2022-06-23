@@ -2,12 +2,8 @@
   <div class="wrapper">
     <meetups-header @push="(n) => push(n)" />
     <main class="main">
-      <page-index v-if="currentPath === '/'" />
-      <page-login v-else-if="currentPath === '/login'" />
-      <page-register v-else-if="currentPath === '/register'" />
-      <div v-else>404 - Not Found</div>
+      <router-view />
     </main>
-
     <meetups-footer />
   </div>
 </template>
@@ -15,9 +11,9 @@
 <script>
 import MeetupsHeader from './components/MeetupsHeader';
 import MeetupsFooter from './components/MeetupsFooter';
-import PageIndex from "./views/PageIndex";
-import PageLogin from "./views/PageLogin";
-import PageRegister from "./views/PageRegister";
+import PageIndex from './views/PageIndex';
+import PageLogin from './views/PageLogin';
+import PageRegister from './views/PageRegister';
 
 export default {
   name: 'App',
@@ -29,18 +25,26 @@ export default {
     PageLogin,
     PageRegister,
   },
-  data(){
+  data() {
     return {
       currentPath: location.pathname,
-    }
+    };
+  },
+  mounted() {
+    window.addEventListener('popstate', this.updateCurrentPath);
+  },
+  beforeUnmount() {
+    window.removeEventListener('popstate', this.updateCurrentPath);
   },
   methods: {
-    push(path){
-      console.log(path);
+    push(path) {
       this.currentPath = path;
       history.pushState(null, '', this.currentPath);
-    }
-  }
+    },
+    updateCurrentPath() {
+      this.currentPath = location.pathname;
+    },
+  },
 };
 </script>
 

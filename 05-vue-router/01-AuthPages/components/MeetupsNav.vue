@@ -1,18 +1,13 @@
 <template>
   <nav class="nav">
-    <a href="/login" @click.prevent="$emit('push', '/login')" class="nav__link">Вход</a>
-    <a href="/register" @click.prevent="push('/register')" class="nav__link">Регистрация</a>
+    <router-link to="/login" class="nav__link">Вход</router-link>
+    <router-link to="/register" class="nav__link">Регистрация</router-link>
   </nav>
 </template>
 
 <script>
 export default {
   name: 'MeetupsNav',
-  methods: {
-    push( path ){
-      this.$emit('push', path);
-    }
-  },
 };
 </script>
 

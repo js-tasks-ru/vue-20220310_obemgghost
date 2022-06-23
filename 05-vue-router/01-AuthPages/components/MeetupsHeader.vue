@@ -1,7 +1,7 @@
 <template>
   <header class="header">
-    <meetups-logo @push="(n) => $emit('push', n)" />
-    <meetups-nav @push="(n) => $emit('push', n)" />
+    <meetups-logo />
+    <meetups-nav />
   </header>
 </template>
 
@@ -13,12 +13,6 @@ import MeetupsNav from './MeetupsNav';
 export default defineComponent({
   name: 'MeetupsHeader',
   components: { MeetupsNav, MeetupsLogo },
-
-  data(){
-    return {
-
-    }
-  }
 });
 </script>
 
