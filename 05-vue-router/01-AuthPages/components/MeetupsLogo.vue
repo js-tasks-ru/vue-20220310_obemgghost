@@ -1,6 +1,6 @@
 <template>
   <h1 class="logo">
-    <a href="/" class="logo__link"
+    <a href="/" @click.prevent="$emit('push', '/')" class="logo__link"
       ><img src="@/assets/logo.svg" alt="Meetups" class="logo__image" width="174" height="30"
     /></a>
   </h1>
