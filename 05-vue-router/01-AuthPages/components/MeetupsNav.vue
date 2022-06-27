@@ -1,7 +1,7 @@
 <template>
   <nav class="nav">
-    <router-link to="/login" class="nav__link">Вход</router-link>
-    <router-link to="/register" class="nav__link">Регистрация</router-link>
+    <router-link :to="{ name: 'login' }" class="nav__link">Вход</router-link>
+    <router-link :to="{ name: 'register' }" class="nav__link">Регистрация</router-link>
   </nav>
 </template>
 
