@@ -39,6 +39,9 @@ export default {
   methods: {
     handleSubmit() {
       // Требуется обработать сабмит формы
+      let queryRout = this.$route.query['from'] ? this.$route.query['from'] : '/';
+      console.log(queryRout);
+      this.$router.push({ path: queryRout });
     },
   },
 };

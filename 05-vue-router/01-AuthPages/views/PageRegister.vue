@@ -44,6 +44,7 @@
 <script>
 import UiFormGroup from '../components/UiFormGroup';
 import UiContainer from '../components/UiContainer';
+import { router } from '../router';
 
 export default {
   name: 'PageRegister',
@@ -56,6 +57,7 @@ export default {
   methods: {
     handleSubmit() {
       // Требуется обработать сабмит формы
+      this.$router.push({ name: 'login' });
     },
   },
 };
