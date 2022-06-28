@@ -30,12 +30,6 @@ export default {
       currentPath: location.pathname,
     };
   },
-  mounted() {
-    window.addEventListener('popstate', this.updateCurrentPath);
-  },
-  beforeUnmount() {
-    window.removeEventListener('popstate', this.updateCurrentPath);
-  },
   methods: {
     push(path) {
       this.currentPath = path;
