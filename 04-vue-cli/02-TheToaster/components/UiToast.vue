@@ -18,7 +18,7 @@ export default {
     },
     id: {
       require: true,
-      type: Number,
+      type: String,
     },
   },
 

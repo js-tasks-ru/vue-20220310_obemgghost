@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-    <meetups-header />
+    <meetups-header @push="(n) => push(n)" />
     <main class="main">
-      <div>CURRENT PAGE</div>
+      <router-view />
     </main>
     <meetups-footer />
   </div>
@@ -11,6 +11,9 @@
 <script>
 import MeetupsHeader from './components/MeetupsHeader';
 import MeetupsFooter from './components/MeetupsFooter';
+import PageIndex from './views/PageIndex';
+import PageLogin from './views/PageLogin';
+import PageRegister from './views/PageRegister';
 
 export default {
   name: 'App',
@@ -18,6 +21,23 @@ export default {
   components: {
     MeetupsFooter,
     MeetupsHeader,
+    PageIndex,
+    PageLogin,
+    PageRegister,
+  },
+  data() {
+    return {
+      currentPath: location.pathname,
+    };
+  },
+  methods: {
+    push(path) {
+      this.currentPath = path;
+      history.pushState(null, '', this.currentPath);
+    },
+    updateCurrentPath() {
+      this.currentPath = location.pathname;
+    },
   },
 };
 </script>

@@ -8,6 +8,7 @@
 
 <script>
 import UiToast from './UiToast';
+import { nanoid } from 'nanoid';
 
 export default {
   name: 'TheToaster',
@@ -21,7 +22,7 @@ export default {
   },
   methods: {
     success(message) {
-      let toastId = Date.now();
+      let toastId = nanoid();
       this.toasts.push({
         id: toastId,
         type: 'success',
@@ -30,7 +31,7 @@ export default {
       this.setDeleteToastTimer(toastId);
     },
     error(message) {
-      const toastId = Date.now();
+      const toastId = nanoid();
       this.toasts.push({
         id: toastId,
         type: 'error',
