@@ -25,20 +25,6 @@ export default {
     PageLogin,
     PageRegister,
   },
-  data() {
-    return {
-      currentPath: location.pathname,
-    };
-  },
-  methods: {
-    push(path) {
-      this.currentPath = path;
-      history.pushState(null, '', this.currentPath);
-    },
-    updateCurrentPath() {
-      this.currentPath = location.pathname;
-    },
-  },
 };
 </script>
 
