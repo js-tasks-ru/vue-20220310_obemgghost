@@ -17,27 +17,13 @@ import PageRegister from './views/PageRegister';
 
 export default {
   name: 'App',
-
+ 
   components: {
     MeetupsFooter,
     MeetupsHeader,
     PageIndex,
     PageLogin,
     PageRegister,
-  },
-  data() {
-    return {
-      currentPath: location.pathname,
-    };
-  },
-  methods: {
-    push(path) {
-      this.currentPath = path;
-      history.pushState(null, '', this.currentPath);
-    },
-    updateCurrentPath() {
-      this.currentPath = location.pathname;
-    },
   },
 };
 </script>
