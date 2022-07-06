@@ -17,7 +17,7 @@ import PageRegister from './views/PageRegister';
 
 export default {
   name: 'App',
- 
+
   components: {
     MeetupsFooter,
     MeetupsHeader,
