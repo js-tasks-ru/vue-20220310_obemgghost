@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" v-bind="$attrs" class="link"><slot /></component>
+  <component :is="tag" class="link"><slot /></component>
 </template>
 
 <script>
@@ -9,8 +9,8 @@ export default {
     tag: {
       type: [String, Object],
       default: 'router-link',
-    }
-  }
+    },
+  },
 };
 </script>
 
