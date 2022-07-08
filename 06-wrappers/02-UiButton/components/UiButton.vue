@@ -1,5 +1,7 @@
 <template>
-  <component :is="tag" :type="buttonType" class="button" :class="[buttonClass, buttonBlock]"><slot /></component>
+  <component :is="tag" :type="buttonType" class="button" :class="[buttonClass, { button_block: block }]"
+    ><slot
+  /></component>
 </template>
 
 <script>
@@ -19,9 +21,6 @@ export default {
   computed: {
     buttonClass() {
       return 'button_' + this.variant;
-    },
-    buttonBlock() {
-      return this.block !== false ? 'button_block' : null;
     },
     buttonType() {
       return this.tag === 'button' ? 'button' : null;
