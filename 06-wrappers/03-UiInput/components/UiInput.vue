@@ -4,7 +4,15 @@
       <img class="icon" alt="icon" />
     </div>
 
-    <input ref="input" class="form-control form-control_rounded form-control_sm" />
+    <component
+      :is="tag"
+      ref="input"
+      v-bind="$attrs"
+      class="form-control"
+      :class="{ 'form-control_sm': small, 'form-control_rounded': rounded }"
+      :value="$attrs['modelValue']"
+      @input="$emit('update:modelValue', $event.target.value)"
+    />
 
     <div class="input-group__icon">
       <img class="icon" alt="icon" />
@@ -15,6 +23,23 @@
 <script>
 export default {
   name: 'UiInput',
+  inheritAttrs: false,
+  props: {
+    small: Boolean,
+    rounded: Boolean,
+    multiline: Boolean,
+  },
+  emits: ['update:modelValue'],
+  computed: {
+    tag() {
+      return this.multiline ? 'textarea' : 'input';
+    },
+  },
+  methods: {
+    focus() {
+      return this.$refs['input'].focus();
+    },
+  },
 };
 </script>
 
