@@ -7,26 +7,26 @@ export default {
   name: 'UiButton',
   props: {
     tag: {
-      type: String,
+      type: [String, Object],
       default: 'button',
     },
     variant: {
       type: String,
-      default: 'secondary'
+      default: 'secondary',
     },
-    block: String,
+    block: Boolean,
   },
   computed: {
-    buttonClass(){
+    buttonClass() {
       return 'button_' + this.variant;
     },
     buttonBlock() {
-      return this.block !== undefined ? 'button_block' : null;
+      return this.block !== false ? 'button_block' : null;
     },
-    buttonType(){
+    buttonType() {
       return this.tag === 'button' ? 'button' : null;
-    }
-  }
+    },
+  },
 };
 </script>
 
