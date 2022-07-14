@@ -1,8 +1,15 @@
 <template>
   <div class="image-uploader">
-    <label class="image-uploader__preview image-uploader__preview-loading" style="--bg-url: url('/link.jpeg')">
-      <span class="image-uploader__text">Загрузить изображение</span>
-      <input type="file" accept="image/*" class="image-uploader__input" />
+    <label class="image-uploader__preview" :class="{ 'image-uploader__preview-loading': state === 'loading' }">
+      <span class="image-uploader__text">{{ text }}</span>
+      <input
+        ref="fileInput"
+        v-bind="$attrs"
+        type="file"
+        accept="image/*"
+        class="image-uploader__input"
+        @click="fileCheck"
+        @change="fileChange" />
     </label>
   </div>
 </template>
@@ -10,6 +17,72 @@
 <script>
 export default {
   name: 'UiImageUploader',
+
+  inheritAttrs: false,
+
+  props: {
+    preview: String,
+    uploader: Function,
+  },
+
+  emits: ['select', 'upload', 'error', 'remove'],
+
+  data(){
+    return {
+      state: this.preview ? 'uploaded' : 'empty',
+    }
+  },
+
+  computed: {
+    previewImage() {
+      return this.preview ? `url(${this.preview})` : 'var(--default-cover)';
+    },
+    text() {
+      if( this.state === 'loading' ) {
+        return "Загрузка...";
+      } else if(this.state === 'empty' ) {
+        return "Загрузить изображение";
+      } else {
+        return "Удалить изображение";
+      }
+    }
+  },
+
+  methods: {
+    fileCheck($event){
+      if(this.state === 'uploaded') {
+        $event.preventDefault();
+        this.$refs['fileInput'].value = null;
+        this.$emit('remove');
+        this.state = 'empty';
+      }
+    },
+
+    fileChange(){
+      this.state = 'loading';
+      const file = new File(this.$refs?.fileInput?.files, 'newFile');
+
+      if(this.uploader) {
+        this.uploader(file)
+          .then((res) => {
+            this.$emit('upload', res);
+          })
+          .then(
+            () => {
+              this.state = 'uploaded';
+            },
+            (err) => {
+              this.$emit('error', err);
+              this.state = 'empty';
+            }
+          )
+      } else {
+        this.state = 'uploaded';
+      }
+      this.$emit('select', this.$refs?.fileInput?.files[0]);
+      this.$refs.fileInput.value = null;
+    }
+  }
 };
 </script>
 
@@ -23,10 +96,9 @@ export default {
 }
 
 .image-uploader__preview {
-  --bg-url: var(--default-cover);
   background-size: cover;
   background-position: center;
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--bg-url);
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), v-bind(previewImage);
   border: 2px solid var(--blue-light);
   border-radius: 8px;
   transition: 0.2s border-color;
